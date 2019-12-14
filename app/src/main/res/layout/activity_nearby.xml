@@ -11,35 +11,39 @@
         android:id="@+id/txt_lang"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="32dp"
+        android:layout_marginStart="30dp"
         android:layout_marginLeft="32dp"
-        android:layout_marginTop="24dp"
+        android:layout_marginTop="36dp"
         android:text="lang"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/btn_start" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_start"
+        android:layout_alignParentTop="true"
+        android:layout_alignParentStart="true" />
 
     <TextView
         android:id="@+id/txt_lat"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="564dp"
         android:text="lat"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.544"
-        app:layout_constraintStart_toEndOf="@+id/txt_lang" />
+        app:layout_constraintStart_toEndOf="@+id/txt_lang"
+        android:layout_alignParentTop="true"
+        android:layout_toStartOf="@+id/btn_start"
+        android:layout_marginTop="13dp" />
 
     <Button
         android:id="@+id/btn_start"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginStart="51dp"
-        android:layout_marginTop="104dp"
+        android:layout_marginStart="45dp"
         android:text="Start"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent"
         tools:layout_editor_absoluteX="70dp"
-        android:layout_below="@+id/txt_lang"
+        android:layout_alignBaseline="@+id/btn_end"
+        android:layout_alignBottom="@+id/btn_end"
         android:layout_toEndOf="@+id/txt_lang" />
 
     <Button
@@ -50,10 +54,18 @@
         tools:layout_editor_absoluteY="49dp"
         android:layout_marginRight="8dp"
         app:layout_constraintRight_toRightOf="parent"
-        android:layout_below="@+id/btn_start"
-        android:layout_alignStart="@+id/btn_start"
-        android:layout_marginStart="8dp"
-        android:layout_marginTop="42dp" />
+        android:layout_marginStart="40dp"
+        android:layout_alignBaseline="@+id/txt_lang"
+        android:layout_alignBottom="@+id/txt_lang"
+        android:layout_toEndOf="@+id/btn_start" />
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="match_parent"
+        android:layout_height="800dp"
+        android:layout_marginTop="30dp"
+        android:layout_below="@+id/txt_lang"
+        android:layout_alignParentStart="true" />
 
 
 </RelativeLayout>
