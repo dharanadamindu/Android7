@@ -8,20 +8,17 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.IntentFilter;
 import android.content.pm.PackageManager;
+import android.location.Location;
+import android.location.LocationListener;
+import android.location.LocationManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
-import android.telephony.TelephonyManager;
 import android.view.View;
-import android.webkit.WebChromeClient;
-import android.webkit.WebSettings;
-import android.webkit.WebView;
-import android.webkit.WebViewClient;
 import android.widget.Button;
 import android.widget.TextView;
-import android.widget.ImageButton;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -31,20 +28,17 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.location.LocationServices;
 
-import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 
-import static java.lang.Thread.*;
-
-
-public class Nearby extends AppCompatActivity {
+public class Nearby extends AppCompatActivity  {
     //Variables
+    TextView txtLat;
     private Button button_start;
     private Button button_end;
     private TextView txt_lat;
@@ -52,29 +46,17 @@ public class Nearby extends AppCompatActivity {
     private BroadcastReceiver broadcastReceiver;
     private String lang;
     private String lat;
-    private static String URL_UPDATECODINATES = "http://192.168.1.103/citytransport_android/locationUpdate.php";
-    private WebView webView;
+    private TextView textView;
 
+    private static String URL_UPDATECODINATES = "http://192.168.10.100/citytransport_android/update.php";
+
+    protected LocationManager locationManager;
+    protected LocationListener locationListener;
 
     @Override
     protected void onResume() {
         super.onResume();
-        if (broadcastReceiver == null) {
-            broadcastReceiver = new BroadcastReceiver() {
-                @Override
-                public void onReceive(Context context, Intent intent) {
 
-                    txt_lang.append("\n" + intent.getExtras().get("coordinates_long"));
-                    txt_lat.append("\n" + intent.getExtras().get("coordinates_lat"));
-
-//                  lang = (String) intent.getExtras().get("coordinates_long");
-//                  lat = (String) intent.getExtras().get("coordinates_lat");
-                    lat = "6.868263";
-                    lang = "79.883704";
-                }
-            };
-        }
-        registerReceiver(broadcastReceiver, new IntentFilter("location_update"));
     }
 
     @Override
@@ -90,71 +72,34 @@ public class Nearby extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_nearby);
 
-
-        webView = (WebView) findViewById(R.id.webview);
-        webView.setWebViewClient(new WebViewClient());
-
-        webView.setWebChromeClient(new WebChromeClient());
-        WebSettings webSettings = webView.getSettings();
-        webSettings.setJavaScriptEnabled(true);
-        webSettings.setDomStorageEnabled(true);
-        webView.setWebChromeClient(new WebChromeClient());
-        webSettings.setDomStorageEnabled(true);
-        webSettings.setLoadWithOverviewMode(true);
-        webSettings.setUseWideViewPort(true);
-        webSettings.setBuiltInZoomControls(true);
-        webSettings.setDisplayZoomControls(false);
-        webSettings.setSupportZoom(true);
-        webSettings.setDefaultTextEncodingName("utf-8");
-
-        webView.loadUrl("http://192.168.10.100:8000/nearby");
-
         //Assign values to variables
         button_start = (Button) findViewById(R.id.btn_start);
         button_end = (Button) findViewById(R.id.btn_end);
         txt_lang = (TextView) findViewById(R.id.txt_lang);
         txt_lat = (TextView) findViewById(R.id.txt_lat);
 
+        BroadcastReceiver receiver = new BroadcastReceiver() {
 
-        if (!runtime_permission())
-            enable_buttons();
-
+            @Override
+            public void onReceive(Context context, Intent intent) {
+                lang = intent.getExtras().get("coordinates_long").toString();
+                lat = intent.getExtras().get("coordinates_lat").toString();
+            }
+        };
+        registerReceiver(receiver,new IntentFilter("location_update"));
+        viewButtons();
 
     }
 
-    private void enable_buttons() {
+    private void viewButtons() {
         button_start.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 Intent i = new Intent(getApplicationContext(), GpsService.class);
                 startService(i);
+                getBaseContext().startService(i);
                 UpdateTripStatus();
 
-            }
-        });
-
-        button_end.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                AlertDialog.Builder builder = new AlertDialog.Builder(Nearby.this);
-                builder.setTitle("Trip Confirmation");
-                builder.setMessage("Do you want to END this trip?");
-                builder.setPositiveButton("Yes", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                        Intent i = new Intent(getApplicationContext(), GpsService.class);
-                        stopService(i);
-                    }
-                });
-                builder.setNegativeButton("No", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialog, int which) {
-
-                    }
-                });
-                AlertDialog dialog = builder.create();
-                dialog.show();
             }
         });
     }
@@ -173,7 +118,7 @@ public class Nearby extends AppCompatActivity {
         super.onRequestPermissionsResult(requestCode, permissions, grantResults);
         if (requestCode == 100) {
             if (grantResults[0] == PackageManager.PERMISSION_GRANTED && grantResults[1] == PackageManager.PERMISSION_GRANTED) {
-                enable_buttons();
+//                enable_buttons();
             } else {
                 runtime_permission();
             }
@@ -208,6 +153,7 @@ public class Nearby extends AppCompatActivity {
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String, String> params = new HashMap<>();
+
                 //String scheduleNo = "42";
                 params.put("lat", lat);
                 params.put("lng", lang);

@@ -76,7 +76,7 @@
         android:layout_marginRight="8dp"
         android:layout_marginTop="16dp"
         android:background="@drawable/button_main"
-        android:text="NearBy"
+        android:text="Getlocation"
         android:textStyle="bold"
         android:textSize="18sp"
         app:layout_constraintHorizontal_bias="0.504"

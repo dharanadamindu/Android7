@@ -2,7 +2,7 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.citytransport.android7">
 
-    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
     <uses-permission android:name="android.permission.ACCESS_COARSE_LOCATION" />
 
@@ -10,7 +10,6 @@
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="CityTransport"
-        android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity android:name=".MainActivity">
@@ -20,18 +19,24 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".Login"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".FindRoute"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Nearby"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".BusRoutes"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".AboutUs"
-            android:parentActivityName=".MainActivity"/>
-        <activity android:name=".Help"
-            android:parentActivityName=".MainActivity"></activity>
+        <activity
+            android:name=".Login"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".FindRoute"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Nearby"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".BusRoutes"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".AboutUs"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".Help"
+            android:parentActivityName=".MainActivity" />
     </application>
 
 </manifest>

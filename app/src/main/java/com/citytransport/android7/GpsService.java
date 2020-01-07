@@ -22,6 +22,7 @@ public class GpsService extends Service {
         return null;
     }
 
+
     @Override
     public void onCreate() {
         listener = new LocationListener() {
@@ -60,5 +61,6 @@ public class GpsService extends Service {
             locationManager.removeUpdates(listener);
         }
     }
+
 
 }
