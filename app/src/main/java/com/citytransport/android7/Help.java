@@ -30,7 +30,7 @@ public class Help extends AppCompatActivity {
         webSettings.setSupportZoom(true);
         webSettings.setDefaultTextEncodingName("utf-8");
 
-        webView.loadUrl("https://google.com");
+        webView.loadUrl("http://192.168.10.100:8000/help");
 
         webView.setWebViewClient(new WebViewClient() {
             public void onReceivedError(WebView webView, int errorCode, String description, String failingUrl) {

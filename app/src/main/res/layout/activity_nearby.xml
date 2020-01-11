@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context="com.citytransport.android7.Nearby"
-    tools:layout_editor_absoluteY="81dp"
+    tools:layout_editor_absoluteY="89dp"
     tools:layout_editor_absoluteX="0dp">
 
 
@@ -18,9 +18,8 @@
         android:text="Latitude: "
         android:layout_alignParentTop="true"
         android:layout_alignParentEnd="true"
-        tools:layout_editor_absoluteY="101dp"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent" />
+        tools:layout_editor_absoluteY="33dp"
+        tools:layout_editor_absoluteX="184dp" />
 
     <TextView
         android:id="@+id/lonTextView"
@@ -29,8 +28,16 @@
         android:text="Longitude: "
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        tools:layout_editor_absoluteY="250dp"
-        tools:layout_editor_absoluteX="155dp" />
+        tools:layout_editor_absoluteY="16dp"
+        tools:layout_editor_absoluteX="425dp" />
+        <!--app:layout_constraintHorizontal_bias="0.498" />-->
+
+    <WebView
+        android:id="@+id/webview"
+        android:layout_width="426dp"
+        android:layout_height="764dp"
+        tools:layout_editor_absoluteX="7dp"
+        tools:layout_editor_absoluteY="-80dp" />
 
 
     <!--<TextView-->
